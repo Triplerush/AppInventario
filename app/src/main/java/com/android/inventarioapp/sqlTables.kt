@@ -1,0 +1,95 @@
+package com.android.inventarioapp
+
+const val sqlQueryUniformes = """
+    CREATE TABLE IF NOT EXISTS "Uniformes" (
+        "UniCod"    TEXT NOT NULL,
+        "UniDes"    TEXT NOT NULL,
+        PRIMARY KEY("UniCod")
+    );
+"""
+
+const val sqlQueryMarcas = """
+    CREATE TABLE IF NOT EXISTS "Marcas" (
+        "MarCod"    INTEGER NOT NULL,
+        "MarNom"    TEXT NOT NULL,
+        PRIMARY KEY("MarCod")
+    );
+"""
+
+const val sqlQueryTallas = """
+    CREATE TABLE IF NOT EXISTS "Tallas" (
+        "TalCod"    TEXT NOT NULL,
+        "TalDes"    TEXT NOT NULL,
+        PRIMARY KEY("TalCod")
+    );
+"""
+
+const val sqlQueryEquipos = """
+    CREATE TABLE IF NOT EXISTS "Equipos" (
+        "EquCod"    TEXT NOT NULL,
+        "EquNom"    TEXT NOT NULL,
+        "PaiCod"    INTEGER NOT NULL,
+        PRIMARY KEY("EquCod")
+    );
+"""
+
+const val sqlQueryPaises = """
+    CREATE TABLE IF NOT EXISTS "Paises" (
+        "PaiCod"    INTEGER NOT NULL,
+        "PaiNom"    TEXT NOT NULL,
+        PRIMARY KEY("PaiCod")
+    );
+"""
+
+const val sqlQueryCamisetas = """
+    CREATE TABLE IF NOT EXISTS "Camisetas" (
+        "CamCod"    TEXT NOT NULL,
+        "CamNom"    TEXT NOT NULL,
+        "TalCod"    TEXT NOT NULL,
+        "CamDor"    INTEGER NOT NULL,
+        "CamNomJug" TEXT NOT NULL,
+        "CamTem"    TEXT NOT NULL,
+        "EquCod"    TEXT NOT NULL,
+        "CamCan"    INTEGER NOT NULL,
+        "MarCod"    INTEGER NOT NULL,
+        "UniCod"    TEXT NOT NULL,
+        "CamIma"    TEXT NOT NULL,
+        FOREIGN KEY("TalCod") REFERENCES "Tallas"("TalCod"),
+        FOREIGN KEY("UniCod") REFERENCES "Uniformes"("UniCod"),
+        FOREIGN KEY("EquCod") REFERENCES "Equipos"("EquCod"),
+        FOREIGN KEY("MarCod") REFERENCES "Marcas"("MarCod"),
+        PRIMARY KEY("CamCod")
+    );
+"""
+
+const val sqlQuerySalidasDet = """
+    CREATE TABLE IF NOT EXISTS "Salidas_det" (
+        "SalDetCod" INTEGER NOT NULL,
+        "SalCabNum" INTEGER NOT NULL,
+        "CamCod"    TEXT NOT NULL,
+        "CanCam"    INTEGER NOT NULL,
+        FOREIGN KEY("CanCam") REFERENCES "Camisetas"("CamCod"),
+        PRIMARY KEY("SalDetCod")
+    );
+"""
+
+const val sqlQueryCliente = """
+    CREATE TABLE IF NOT EXISTS "Cliente" (
+        "CliCod"    TEXT NOT NULL,
+        "CliNom"    TEXT NOT NULL,
+        "CliNumTel" TEXT NOT NULL,
+        PRIMARY KEY("CliCod")
+    );
+"""
+
+const val sqlQuerySalidasCab = """
+    CREATE TABLE IF NOT EXISTS "Salidas_cab" (
+        "SalCabNum"  INTEGER NOT NULL,
+        "SalCabYear" INTEGER NOT NULL,
+        "SalCabMon"  INTEGER NOT NULL,
+        "SalCabDay"  INTEGER NOT NULL,
+        "SalCabCli"  TEXT NOT NULL,
+        FOREIGN KEY("SalCabCli") REFERENCES "Cliente"("CliCod"),
+        PRIMARY KEY("SalCabNum")
+    );
+"""
