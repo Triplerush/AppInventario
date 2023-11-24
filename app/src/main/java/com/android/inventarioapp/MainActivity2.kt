@@ -98,37 +98,20 @@ class MainActivity2 : AppCompatActivity() {
         }
 
         val camisetasData = listOf(
-            Shirt("001", "JerseyA1", "M", 1, "PlayerA", "ThemeA", "001", 10, 1, "L","ImageURL1"),
-            Shirt("002", "JerseyA2", "L", 2, "PlayerB", "ThemeB", "002", 15, 2,"L", "ImageURL2"),
-            Shirt("003", "JerseyA3", "XL", 1, "PlayerC", "ThemeC", "003", 12, 1,"L", "ImageURL3"),
-            Shirt("004", "JerseyD", "S", 2, "PlayerD", "ThemeD", "004", 8, 2, "L","ImageURL4"),
-            Shirt("005", "JerseyE", "XXL", 1, "PlayerE", "ThemeE", "005", 20, 1, "L","ImageURL5"),
-            Shirt("006", "JerseyF", "L", 2, "PlayerF", "ThemeF", "006", 18, 2, "L","ImageURL6"),
-            Shirt("007", "JerseyG", "M", 1, "PlayerG", "ThemeG", "007", 14, 1, "L","ImageURL7"),
-            Shirt("008", "JerseyH", "S", 2, "PlayerH", "ThemeH", "008", 9, 2, "L","ImageURL8"),
-            Shirt("009", "JerseyI", "XL", 1, "PlayerI", "ThemeI", "009", 16, 1, "L","ImageURL9"),
-            Shirt("010", "JerseyJ", "XXL", 2, "PlayerJ", "ThemeJ", "010", 22, 2,"L", "ImageURL10")
+            Shirt("001", "JerseyA", "M", 1, "PlayerA", "ThemeA", "001", 10, 1, "ImageURL1"),
+            Shirt("002", "JerseyB", "L", 2, "PlayerB", "ThemeB", "002", 15, 2, "ImageURL2"),
+            Shirt("003", "JerseyC", "XL", 1, "PlayerC", "ThemeC", "003", 12, 1, "ImageURL3"),
+            Shirt("004", "JerseyD", "S", 2, "PlayerD", "ThemeD", "004", 8, 2, "ImageURL4"),
+            Shirt("005", "JerseyE", "XXL", 1, "PlayerE", "ThemeE", "005", 20, 1, "ImageURL5"),
+            Shirt("006", "JerseyF", "L", 2, "PlayerF", "ThemeF", "006", 18, 2, "ImageURL6"),
+            Shirt("007", "JerseyG", "M", 1, "PlayerG", "ThemeG", "007", 14, 1, "ImageURL7"),
+            Shirt("008", "JerseyH", "S", 2, "PlayerH", "ThemeH", "008", 9, 2, "ImageURL8"),
+            Shirt("009", "JerseyI", "XL", 1, "PlayerI", "ThemeI", "009", 16, 1, "ImageURL9"),
+            Shirt("010", "JerseyJ", "XXL", 2, "PlayerJ", "ThemeJ", "010", 22, 2, "ImageURL10")
         )
 
         for (camiseta in camisetasData) {
             dbManager.addCamiseta(this, camiseta)
-        }
-
-        val salidaDetallesData = listOf(
-            SalidaDetalle(1, 1, "001", 2),
-            SalidaDetalle(2, 1, "002", 3),
-            SalidaDetalle(3, 2, "003", 1),
-            SalidaDetalle(4, 2, "004", 4),
-            SalidaDetalle(5, 3, "005", 2),
-            SalidaDetalle(6, 3, "006", 3),
-            SalidaDetalle(7, 4, "007", 1),
-            SalidaDetalle(8, 4, "008", 5),
-            SalidaDetalle(9, 5, "009", 3),
-            SalidaDetalle(10, 5, "010", 2)
-        )
-
-        for (salidaDetalle in salidaDetallesData) {
-            dbManager.addSalidaDet(this, salidaDetalle)
         }
 
         val clientesData = listOf(
@@ -147,24 +130,6 @@ class MainActivity2 : AppCompatActivity() {
         for (cliente in clientesData) {
             dbManager.addCliente(this, cliente)
         }
-
-        val salidaCabecerasData = listOf(
-            SalidaCabecera(1, 2023, 11, 19, "C001"),
-            SalidaCabecera(2, 2023, 11, 19, "C002"),
-            SalidaCabecera(3, 2023, 11, 19, "C003"),
-            SalidaCabecera(4, 2023, 11, 19, "C004"),
-            SalidaCabecera(5, 2023, 11, 19, "C005"),
-            SalidaCabecera(6, 2023, 11, 19, "C006"),
-            SalidaCabecera(7, 2023, 11, 19, "C007"),
-            SalidaCabecera(8, 2023, 11, 19, "C008"),
-            SalidaCabecera(9, 2023, 11, 19, "C009"),
-            SalidaCabecera(10, 2023, 11, 19, "C010")
-        )
-
-        for (salidaCabecera in salidaCabecerasData) {
-            dbManager.addSalidaCab(this, salidaCabecera)
-        }
-
     }
 }
 

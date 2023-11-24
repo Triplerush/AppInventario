@@ -1,13 +1,5 @@
 package com.android.inventarioapp
 
-const val sqlQueryUniformes = """
-    CREATE TABLE IF NOT EXISTS "Uniformes" (
-        "UniCod"    TEXT NOT NULL,
-        "UniDes"    TEXT NOT NULL,
-        PRIMARY KEY("UniCod")
-    );
-"""
-
 const val sqlQueryMarcas = """
     CREATE TABLE IF NOT EXISTS "Marcas" (
         "MarCod"    INTEGER NOT NULL,
@@ -52,10 +44,8 @@ const val sqlQueryCamisetas = """
         "EquCod"    TEXT NOT NULL,
         "CamCan"    INTEGER NOT NULL,
         "MarCod"    INTEGER NOT NULL,
-        "UniCod"    TEXT NOT NULL,
         "CamIma"    TEXT NOT NULL,
         FOREIGN KEY("TalCod") REFERENCES "Tallas"("TalCod"),
-        FOREIGN KEY("UniCod") REFERENCES "Uniformes"("UniCod"),
         FOREIGN KEY("EquCod") REFERENCES "Equipos"("EquCod"),
         FOREIGN KEY("MarCod") REFERENCES "Marcas"("MarCod"),
         PRIMARY KEY("CamCod")
@@ -68,6 +58,7 @@ const val sqlQuerySalidasDet = """
         "SalCabNum" INTEGER NOT NULL,
         "CamCod"    TEXT NOT NULL,
         "CanCam"    INTEGER NOT NULL,
+        "DetPre"    REAL NOT NULL,
         FOREIGN KEY("CanCam") REFERENCES "Camisetas"("CamCod"),
         PRIMARY KEY("SalDetCod")
     );
@@ -89,6 +80,7 @@ const val sqlQuerySalidasCab = """
         "SalCabMon"  INTEGER NOT NULL,
         "SalCabDay"  INTEGER NOT NULL,
         "SalCabCli"  TEXT NOT NULL,
+        "CabPre"     REAL NOT NULL,
         FOREIGN KEY("SalCabCli") REFERENCES "Cliente"("CliCod"),
         PRIMARY KEY("SalCabNum")
     );

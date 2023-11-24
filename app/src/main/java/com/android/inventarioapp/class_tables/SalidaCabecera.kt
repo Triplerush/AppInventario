@@ -5,5 +5,6 @@ data class SalidaCabecera(
     val SalCabYear: Int,
     val SalCabMon: Int,
     val SalCabDay: Int,
+    val CabPre: Float,
     val SalCabCli: String
 )

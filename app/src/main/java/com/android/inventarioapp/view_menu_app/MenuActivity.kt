@@ -14,8 +14,8 @@ import com.android.inventarioapp.view_add_sales.AddSalesActivity
 import com.android.inventarioapp.view_add_shirt.AddShirtActivity
 import com.android.inventarioapp.view_delete_shirt.DeleteShirtActivity
 import com.android.inventarioapp.view_sales.ViewSalesActivity
-import com.android.inventarioapp.view_shirt.ViewShirtActivity
 import com.android.inventarioapp.view_search_shirts.SearchShirtActivity
+import com.android.inventarioapp.view_extra_data.AddExtraDataActivity
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var btnAddShirt: Button
@@ -23,6 +23,7 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var btnRemoveShirt: Button
     private lateinit var btnViewSale: Button
     private lateinit var btnAddSale: Button
+    private lateinit var btnAddExtraData: Button
     private lateinit var btnExit: Button
 
 
@@ -39,6 +40,7 @@ class MenuActivity : AppCompatActivity() {
         btnRemoveShirt = findViewById(R.id.btnDeleteShirt)
         btnViewSale = findViewById(R.id.btnViewSales)
         btnAddSale = findViewById(R.id.btnAddSales)
+        btnAddExtraData = findViewById(R.id.btnAddExtraData)
         btnExit = findViewById(R.id.btnExit)
     }
 
@@ -46,9 +48,11 @@ class MenuActivity : AppCompatActivity() {
         btnAddShirt.setOnClickListener { navigateToAddShirtActivity() }
         btnViewShirt.setOnClickListener { navigateToViewShirtActivity() }
         btnRemoveShirt.setOnClickListener { navigateToDeleteActivity() }
-        btnViewSale.setOnClickListener { navigateToViewSalesActivity() }
         btnAddSale.setOnClickListener { navigateToAddSalesActivity() }
+        btnViewSale.setOnClickListener { navigateToViewSalesActivity() }
+        btnAddExtraData.setOnClickListener { navigateToAddExtraData() }
         btnExit.setOnClickListener { navigateToExit() }
+
     }
 
     private fun navigateToAddShirtActivity() {
@@ -57,7 +61,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun navigateToViewShirtActivity() {
-        val intent = Intent(this, ViewShirtActivity::class.java)
+        val intent = Intent(this, SearchShirtActivity::class.java)
         startActivity(intent)
     }
 
@@ -66,13 +70,19 @@ class MenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToViewSalesActivity() {
-        val intent = Intent(this, MainActivity2::class.java)
+    private fun navigateToAddSalesActivity() {
+        val intent = Intent(this, AddSalesActivity::class.java)
         startActivity(intent)
     }
 
-    private fun navigateToAddSalesActivity() {
-        requestPermissionHandler()
+    private fun navigateToViewSalesActivity() {
+        val intent = Intent(this, ViewSalesActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToAddExtraData() {
+        val intent = Intent(this, AddExtraDataActivity::class.java)
+        startActivity(intent)
     }
 
     private fun navigateToExit() {
@@ -89,7 +99,6 @@ class MenuActivity : AppCompatActivity() {
 
             }
             Log.i("permiso",isGranted.toString())
-
         }
 
     private fun requestPermissionHandler() {

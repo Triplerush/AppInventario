@@ -145,7 +145,7 @@ class EditShirtActivity : AppCompatActivity() {
             selectedMarca.isNotBlank())
         {
             Toast.makeText(this@EditShirtActivity,"CAMISETA MODIFICADA CORRECTAMENTE", Toast.LENGTH_LONG).show()
-            base.updateShirt(this, Shirt(inputValueCode,inputValueName,selectedTalla,inputValueDorsal.toInt(),inputValuePlayer,inputValueTemp,selectedTeam,inputValueAmount.toInt(),selectedMarca.toInt(),"L",indexUri(uriImage)))
+            base.updateShirt(this, Shirt(inputValueCode,inputValueName,selectedTalla,inputValueDorsal.toInt(),inputValuePlayer,inputValueTemp,selectedTeam,inputValueAmount.toInt(),selectedMarca.toInt(),indexUri(uriImage)))
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
             finishAffinity()

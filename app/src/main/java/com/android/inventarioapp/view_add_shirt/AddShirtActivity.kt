@@ -135,7 +135,7 @@ class AddShirtActivity : AppCompatActivity() {
             uriImage.isNotBlank())
         {
             Toast.makeText(this@AddShirtActivity,"CAMISETA AGREGADA CORRECTAMENTE", Toast.LENGTH_LONG).show()
-            base.addCamiseta(this, Shirt(inputValueCode,inputValueName,selectedTalla,inputValueDorsal.toInt(),inputValuePlayer,inputValueTemp,selectedTeam,inputValueAmount.toInt(),selectedMarca.toInt(),"L",indexUri(uriImage)))
+            base.addCamiseta(this, Shirt(inputValueCode,inputValueName,selectedTalla,inputValueDorsal.toInt(),inputValuePlayer,inputValueTemp,selectedTeam,inputValueAmount.toInt(),selectedMarca.toInt(),indexUri(uriImage)))
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
             finishAffinity()

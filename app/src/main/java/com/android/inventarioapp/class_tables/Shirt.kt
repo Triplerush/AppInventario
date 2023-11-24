@@ -10,6 +10,5 @@ data class Shirt (
     val EquCod: String,
     val CamCan: Int,
     val MarCod: Int,
-    val UniCod: String,
     val CamIma: String
 )

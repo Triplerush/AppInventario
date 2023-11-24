@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.android.inventarioapp.class_tables.Marca
-import com.android.inventarioapp.class_tables.Uniforme
 import com.android.inventarioapp.class_tables.Cliente
 import com.android.inventarioapp.class_tables.Equipo
 import com.android.inventarioapp.class_tables.Pais
@@ -16,7 +15,6 @@ import com.android.inventarioapp.class_tables.SalidaDetalle
 
 class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db", null,1){
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(sqlQueryUniformes)
         db?.execSQL(sqlQueryMarcas)
         db?.execSQL(sqlQueryTallas)
         db?.execSQL(sqlQueryEquipos)
@@ -29,63 +27,6 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
-    }
-
-    fun addUniforme(context: Context, uniforme: Uniforme) : Boolean{
-        var response = true
-        val contentValues = ContentValues()
-        contentValues.put("UniCod", uniforme.UniCod)
-        contentValues.put("UniDes", uniforme.UniDes)
-        val db = SQLManager(context)
-        val manager = db.writableDatabase
-        try {
-            manager.insert( "Uniformes", null, contentValues)
-
-        }catch (e: Exception){
-            print(e.message)
-            response = false
-        }finally {
-            db.close()
-        }
-        return response
-    }
-
-    fun getOneUniforme(context: Context, cod: String): Uniforme? {
-        val db = SQLManager(context)
-        val manager = db.readableDatabase
-        val query = "SELECT * FROM Uniformes WHERE UniCod = '$cod'"
-        val cursor = manager.rawQuery(query, null)
-
-        var uniforme: Uniforme? = null
-
-        if (cursor.moveToFirst()) {
-            uniforme = Uniforme(cursor.getString(0), cursor.getString(1))
-        }
-
-        cursor.close()
-
-        return uniforme
-    }
-
-    fun getUniformes(context: Context): Array<Uniforme> {
-        var listaUniformes: Array<Uniforme> = emptyArray()
-        val db = SQLManager(context)
-        val manager = db.readableDatabase
-        val query = "SELECT * FROM Uniformes"
-        val cursor = manager.rawQuery(query, null)
-
-        if (cursor.moveToFirst()) {
-            do {
-                val uniforme = Uniforme(cursor.getString(0), cursor.getString(1))
-                listaUniformes = listaUniformes.plus(uniforme)
-            } while (cursor.moveToNext())
-        }
-
-        if (cursor != null && !cursor.isClosed) {
-            cursor.close()
-        }
-
-        return listaUniformes
     }
 
     fun addMarca(context: Context, marca: Marca): Boolean {
@@ -360,7 +301,6 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         contentValues.put("EquCod", shirt.EquCod)
         contentValues.put("CamCan", shirt.CamCan)
         contentValues.put("MarCod", shirt.MarCod)
-        contentValues.put("UniCod", shirt.UniCod)
         contentValues.put("CamIma", shirt.CamIma)
         val db = SQLManager(context)
         val manager = db.writableDatabase
@@ -395,7 +335,6 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
                 cursor.getInt(7),
                 cursor.getInt(8),
                 cursor.getString(9),
-                cursor.getString(10)
             )
         }
         cursor.close()
@@ -416,7 +355,6 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         contentValues.put("EquCod", shirt.EquCod)
         contentValues.put("CamCan", shirt.CamCan)
         contentValues.put("MarCod", shirt.MarCod)
-        contentValues.put("UniCod", shirt.UniCod)
         contentValues.put("CamIma", shirt.CamIma)
 
         val db = SQLManager(context)
@@ -461,7 +399,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
                     cursor.getString(0), cursor.getString(1), cursor.getString(2),
                     cursor.getInt(3), cursor.getString(4), cursor.getString(5),
                     cursor.getString(6), cursor.getInt(7), cursor.getInt(8),
-                    cursor.getString(9), cursor.getString(10)
+                    cursor.getString(9)
                 )
                 listaCamisetas = listaCamisetas.plus(camiseta)
             } while (cursor.moveToNext())
@@ -480,6 +418,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         contentValues.put("SalDetCod", salidaDetalle.SalDetCod)
         contentValues.put("SalCabNum", salidaDetalle.SalCabNum)
         contentValues.put("CamCod", salidaDetalle.CamCod)
+        contentValues.put("DetPre", salidaDetalle.DetPre)
         contentValues.put("CanCam", salidaDetalle.CanCam)
         val db = SQLManager(context)
         val manager = db.writableDatabase
@@ -507,7 +446,8 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
                 cursor.getInt(0),
                 cursor.getInt(1),
                 cursor.getString(2),
-                cursor.getInt(3)
+                cursor.getInt(3),
+                cursor.getFloat(4)
             )
         }
 
@@ -527,7 +467,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
             do {
                 val salidaDetalle = SalidaDetalle(
                     cursor.getInt(0), cursor.getInt(1), cursor.getString(2),
-                    cursor.getInt(3)
+                    cursor.getInt(3), cursor.getFloat(4)
                 )
                 listaSalidasDetalles = listaSalidasDetalles.plus(salidaDetalle)
             } while (cursor.moveToNext())
@@ -604,6 +544,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         contentValues.put("SalCabYear", salidaCabecera.SalCabYear)
         contentValues.put("SalCabMon", salidaCabecera.SalCabMon)
         contentValues.put("SalCabDay", salidaCabecera.SalCabDay)
+        contentValues.put("CabPre", salidaCabecera.CabPre)
         contentValues.put("SalCabCli", salidaCabecera.SalCabCli)
         val db = SQLManager(context)
         val manager = db.writableDatabase
@@ -632,7 +573,8 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
                 cursor.getInt(1),
                 cursor.getInt(2),
                 cursor.getInt(3),
-                cursor.getString(4)
+                cursor.getFloat(4),
+                cursor.getString(5)
             )
         }
 
@@ -652,7 +594,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
             do {
                 val salidaCabecera = SalidaCabecera(
                     cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                    cursor.getInt(3), cursor.getString(4)
+                    cursor.getInt(3), cursor.getFloat(4), cursor.getString(5)
                 )
                 listaSalidasCabeceras = listaSalidasCabeceras.plus(salidaCabecera)
             } while (cursor.moveToNext())
