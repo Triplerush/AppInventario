@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.android.inventarioapp.class_tables.Marca
 import com.android.inventarioapp.class_tables.Cliente
 import com.android.inventarioapp.class_tables.Equipo
@@ -546,8 +547,10 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         contentValues.put("SalCabDay", salidaCabecera.SalCabDay)
         contentValues.put("CabPre", salidaCabecera.CabPre)
         contentValues.put("SalCabCli", salidaCabecera.SalCabCli)
+
         val db = SQLManager(context)
         val manager = db.writableDatabase
+
         try {
             manager.insert("Salidas_cab", null, contentValues)
         } catch (e: Exception) {
@@ -556,6 +559,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         } finally {
             db.close()
         }
+
         return response
     }
 

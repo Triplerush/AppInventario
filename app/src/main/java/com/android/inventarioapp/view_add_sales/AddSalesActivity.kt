@@ -1,5 +1,6 @@
 package com.android.inventarioapp.view_add_sales
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.android.inventarioapp.SQLManager
 import com.android.inventarioapp.class_tables.SalidaCabecera
 import com.android.inventarioapp.class_tables.SalidaDetalle
 import com.android.inventarioapp.class_tables.Shirt
+import com.android.inventarioapp.view_menu_app.MenuActivity
 import java.util.Calendar
 import com.google.android.material.textfield.TextInputEditText
 
@@ -127,6 +129,8 @@ class AddSalesActivity : AppCompatActivity() {
         val price = inputPrice.text.toString()
         val client = sprCliente.selectedItem.toString()
 
+        Log.i("a", price.toFloat().toString())
+
         if(code.isNotBlank() && amount.isNotBlank() && price.isNotBlank() && client != "Cliente"){
             val year = txtInputYear.text.toString()
             val month = txtInputMonth.text.toString()
@@ -140,7 +144,10 @@ class AddSalesActivity : AppCompatActivity() {
                 day.toInt(),
                 price.toFloat(),
                 clientCode))
-            Toast.makeText(this@AddSalesActivity,"Camiseta Agregada", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@AddSalesActivity,"Venta Agregada", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
         }else {
             Toast.makeText(this@AddSalesActivity,"FALTA AGREGAR ALGUN DATO", Toast.LENGTH_LONG).show()
         }
@@ -176,15 +183,16 @@ class AddSalesActivity : AppCompatActivity() {
             return
         }
 
-        var price = 0;
+        var price : Double = 0.0;
         for (i in 0 until adapterShirtAction.itemCount) {
             val shirtViewHolder = rvShirts.findViewHolderForAdapterPosition(i) as ShirtViewHolder?
             val inputPriceValue = shirtViewHolder?.getInputPriceValue()
+            val inputAmountValue = shirtViewHolder?.getInputAmountValue()
             if (inputPriceValue.isNullOrBlank()) {
                 Toast.makeText(this@AddSalesActivity,"FALTA PONER PRECIO A ALGUNA CAMISETA", Toast.LENGTH_LONG).show()
                 return
             }
-            price += inputPriceValue.toInt() ?: 0;
+            price += inputPriceValue.toDouble() * inputAmountValue!!.toDouble()
         }
         inputPrice.text = price.toString();
     }

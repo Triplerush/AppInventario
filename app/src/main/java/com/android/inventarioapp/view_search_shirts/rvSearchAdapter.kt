@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -35,13 +36,13 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
     val txtName = view.findViewById<TextView>(R.id.txtShirt)
     val txtAmount = view.findViewById<TextView>(R.id.txtAmount)
     val imageShirt = view.findViewById<ImageView>(R.id.imageShirt)
-    val btnVer = view.findViewById<Button>(R.id.btnVer)
+    val container = view.findViewById<LinearLayout>(R.id.container)
 
     fun render(shirt: Shirt) {
         txtName.text = shirt.CamNom
         txtAmount.text = "Cantidad: ${shirt.CamCan}"
         imageShirt.setImageURI(Uri.parse(shirt.CamIma))
-        btnVer.setOnClickListener { navigateToReadShirtActivity(shirt.CamCod) }
+        container.setOnClickListener { navigateToReadShirtActivity(shirt.CamCod) }
     }
 
     fun navigateToReadShirtActivity(code: String) {

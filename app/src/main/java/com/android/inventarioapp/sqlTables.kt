@@ -79,8 +79,8 @@ const val sqlQuerySalidasCab = """
         "SalCabYear" INTEGER NOT NULL,
         "SalCabMon"  INTEGER NOT NULL,
         "SalCabDay"  INTEGER NOT NULL,
-        "SalCabCli"  TEXT NOT NULL,
         "CabPre"     REAL NOT NULL,
+        "SalCabCli"  TEXT NOT NULL,
         FOREIGN KEY("SalCabCli") REFERENCES "Cliente"("CliCod"),
         PRIMARY KEY("SalCabNum")
     );

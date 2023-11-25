@@ -44,4 +44,6 @@
     <string name="borrar">Borrar</string>
     <string name="total">Total</string>
     <string name="calculate">Calcular</string>
+    <string name="date">Fecha</string>
+
 </resources>

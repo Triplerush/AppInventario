@@ -76,7 +76,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun navigateToViewSalesActivity() {
-        val intent = Intent(this, ViewSalesActivity::class.java)
+        val intent = Intent(this, MainActivity2::class.java)
         startActivity(intent)
     }
 

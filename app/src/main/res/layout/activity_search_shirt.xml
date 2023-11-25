@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_app"
     android:gravity="center"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="10dp"
     tools:context=".view_menu_app.MenuActivity">
 
     <TextView
