@@ -457,11 +457,11 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         return salidaDetalle
     }
 
-    fun getSalidasDetalles(context: Context): Array<SalidaDetalle> {
+    fun getSalidasDetalles(context: Context, codCab : String): Array<SalidaDetalle> {
         var listaSalidasDetalles: Array<SalidaDetalle> = emptyArray()
         val db = SQLManager(context)
         val manager = db.readableDatabase
-        val query = "SELECT * FROM Salidas_det"
+        val query = "SELECT * FROM Salidas_det WHERE SalCabNum = $codCab"
         val cursor = manager.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {

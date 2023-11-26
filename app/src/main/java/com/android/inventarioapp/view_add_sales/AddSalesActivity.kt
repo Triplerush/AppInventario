@@ -72,13 +72,13 @@ class AddSalesActivity : AppCompatActivity() {
         for (shirt in base.getCamisetas(this)) {
             ListaShirts = ListaShirts.plus("${shirt.CamCod} - ${shirt.CamNom}")
         }
-        val adaptadorShirt = ArrayAdapter<String>(this,R.layout.spinner_items,ListaShirts)
+        val adaptadorShirt = ArrayAdapter<String>(this, R.layout.spinner_items, ListaShirts)
         sprCodeshirt.adapter = adaptadorShirt
 
         for (cliente in base.getClientes(this)) {
             ListaClientes = ListaClientes.plus("${cliente.CliCod} - ${cliente.CliNom}")
         }
-        val adaptadorClientes = ArrayAdapter<String>(this,R.layout.spinner_items,ListaClientes)
+        val adaptadorClientes = ArrayAdapter<String>(this, R.layout.spinner_items, ListaClientes)
         sprCliente.adapter = adaptadorClientes
         lista = ArrayList()
         adapterShirtAction = rvAddSaleAdapter(
@@ -99,14 +99,20 @@ class AddSalesActivity : AppCompatActivity() {
 
         sprCodeshirt.onItemSelectedListener = object :
 
-        AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedItem = parent?.getItemAtPosition(position).toString()
-                if(selectedItem != "Camisetas" && !lista.contains(selectedItem)){
+                if (selectedItem != "Camisetas" && !lista.contains(selectedItem)) {
                     lista.add(selectedItem)
                     adapterShirtAction.changeResult(lista)
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
@@ -129,47 +135,85 @@ class AddSalesActivity : AppCompatActivity() {
         val price = inputPrice.text.toString()
         val client = sprCliente.selectedItem.toString()
 
-        Log.i("a", price.toFloat().toString())
-
-        if(code.isNotBlank() && amount.isNotBlank() && price.isNotBlank() && client != "Cliente"){
+        if (code.isNotBlank() && amount.isNotBlank() && price.isNotBlank() && client != "Cliente") {
             val year = txtInputYear.text.toString()
             val month = txtInputMonth.text.toString()
             val day = txtInputDay.text.toString()
             val clientCode = client.split(" - ")[0]
-            createSales(code.toInt())
-            base.addSalidaCab(this, SalidaCabecera(
-                code.toInt(),
-                year.toInt(),
-                month.toInt(),
-                day.toInt(),
-                price.toFloat(),
-                clientCode))
-            Toast.makeText(this@AddSalesActivity,"Venta Agregada", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-            finishAffinity()
-        }else {
-            Toast.makeText(this@AddSalesActivity,"FALTA AGREGAR ALGUN DATO", Toast.LENGTH_LONG).show()
-        }
+            val camCod = verifySales(code.toInt())
 
+            if (camCod == "") {
+                createSales(code.toInt())
+                base.addSalidaCab(
+                    this, SalidaCabecera(
+                        code.toInt(),
+                        year.toInt(),
+                        month.toInt(),
+                        day.toInt(),
+                        price.toFloat(),
+                        clientCode
+                    )
+                )
+                Toast.makeText(this@AddSalesActivity, "Venta Agregada", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MenuActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+            } else {
+                val shirt = base.getOneCamiseta(this, camCod)
+                val nombre = shirt?.CamNom
+                val amount = shirt?.CamCan
+                Toast.makeText(
+                    this@AddSalesActivity,
+                    "LA CAMISETA $nombre solo tiene $amount unidades",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        } else {
+            Toast.makeText(this@AddSalesActivity, "FALTA AGREGAR ALGUN DATO", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
-    private fun createSales(cabCod : Int) {
+    private fun createSales(cabCod: Int) {
         for (i in 0 until adapterShirtAction.itemCount) {
             val shirtViewHolder = rvShirts.findViewHolderForAdapterPosition(i) as ShirtViewHolder?
             val nameShirt = shirtViewHolder?.getNameShirt()?.split(" - ")
             val codShirt = nameShirt?.get(0)
             val inputAmountValue = shirtViewHolder?.getInputAmountValue()
             val inputPriceValue = shirtViewHolder?.getInputPriceValue()
+            val shirt = base.getOneCamiseta(this, codShirt.toString())!!
+            shirt.CamCan -= inputAmountValue!!.toInt()
+
+            base.updateShirt(this,shirt)
             base.addSalidaDet(
-                this,SalidaDetalle(
+                this, SalidaDetalle(
                     ("$cabCod$i").toInt(),
                     cabCod,
                     codShirt.toString(),
                     inputAmountValue!!.toInt(),
-                    inputPriceValue!!.toFloat())
+                    inputPriceValue!!.toFloat()
+                )
             )
         }
+    }
+
+    private fun verifySales(cabCod: Int): String {
+        for (i in 0 until adapterShirtAction.itemCount) {
+            val shirtViewHolder = rvShirts.findViewHolderForAdapterPosition(i) as ShirtViewHolder?
+            val nameShirt = shirtViewHolder?.getNameShirt()?.split(" - ")
+            val codShirt = nameShirt?.get(0)
+            val inputAmountValue = shirtViewHolder?.getInputAmountValue()
+
+            if (!isAvailable(codShirt.toString(), inputAmountValue.toString())) {
+                return codShirt.toString()
+            }
+        }
+        return ""
+    }
+
+    private fun isAvailable(cod: String, amount: String): Boolean {
+        val shirt = base.getOneCamiseta(this, cod)
+        return shirt?.CamCan!! >= amount.toInt()
     }
 
     private fun filtrar(texto: String) {
@@ -177,19 +221,23 @@ class AddSalesActivity : AppCompatActivity() {
         adapterShirtAction.changeResult(lista)
     }
 
-    private fun calculatePrice(){
-        if(adapterShirtAction.itemCount == 0){
+    private fun calculatePrice() {
+        if (adapterShirtAction.itemCount == 0) {
             inputPrice.text = ""
             return
         }
 
-        var price : Double = 0.0;
+        var price: Double = 0.0;
         for (i in 0 until adapterShirtAction.itemCount) {
             val shirtViewHolder = rvShirts.findViewHolderForAdapterPosition(i) as ShirtViewHolder?
             val inputPriceValue = shirtViewHolder?.getInputPriceValue()
             val inputAmountValue = shirtViewHolder?.getInputAmountValue()
             if (inputPriceValue.isNullOrBlank()) {
-                Toast.makeText(this@AddSalesActivity,"FALTA PONER PRECIO A ALGUNA CAMISETA", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@AddSalesActivity,
+                    "FALTA PONER PRECIO A ALGUNA CAMISETA",
+                    Toast.LENGTH_LONG
+                ).show()
                 return
             }
             price += inputPriceValue.toDouble() * inputAmountValue!!.toDouble()
@@ -197,8 +245,8 @@ class AddSalesActivity : AppCompatActivity() {
         inputPrice.text = price.toString();
     }
 
-    private fun calculateAmount(){
-        if(adapterShirtAction.itemCount == 0){
+    private fun calculateAmount() {
+        if (adapterShirtAction.itemCount == 0) {
             inputAmount.text = ""
             return
         }
@@ -208,7 +256,11 @@ class AddSalesActivity : AppCompatActivity() {
             val shirtViewHolder = rvShirts.findViewHolderForAdapterPosition(i) as ShirtViewHolder?
             val inputAmountValue = shirtViewHolder?.getInputAmountValue()
             if (inputAmountValue.isNullOrBlank()) {
-                Toast.makeText(this@AddSalesActivity,"FALTA PONER LA CANTIDAD DE ALGUNA CAMISETA", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@AddSalesActivity,
+                    "FALTA PONER LA CANTIDAD DE ALGUNA CAMISETA",
+                    Toast.LENGTH_LONG
+                ).show()
                 return
             }
             amount += inputAmountValue?.toInt() ?: 0;

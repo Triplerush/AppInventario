@@ -8,7 +8,7 @@ data class Shirt (
     val CamNomJug: String,
     val CamTem: String,
     val EquCod: String,
-    val CamCan: Int,
+    var CamCan: Int,
     val MarCod: Int,
     val CamIma: String
 )

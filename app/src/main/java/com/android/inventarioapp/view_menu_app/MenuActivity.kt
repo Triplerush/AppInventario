@@ -14,8 +14,8 @@ import com.android.inventarioapp.view_add_sales.AddSalesActivity
 import com.android.inventarioapp.view_add_shirt.AddShirtActivity
 import com.android.inventarioapp.view_delete_shirt.DeleteShirtActivity
 import com.android.inventarioapp.view_sales.ViewSalesActivity
+import com.android.inventarioapp.view_add_data.AddDataActivity
 import com.android.inventarioapp.view_search_shirts.SearchShirtActivity
-import com.android.inventarioapp.view_extra_data.AddExtraDataActivity
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var btnAddShirt: Button
@@ -76,12 +76,12 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun navigateToViewSalesActivity() {
-        val intent = Intent(this, MainActivity2::class.java)
+        val intent = Intent(this, ViewSalesActivity::class.java)
         startActivity(intent)
     }
 
     private fun navigateToAddExtraData() {
-        val intent = Intent(this, AddExtraDataActivity::class.java)
+        val intent = Intent(this, AddDataActivity::class.java)
         startActivity(intent)
     }
 

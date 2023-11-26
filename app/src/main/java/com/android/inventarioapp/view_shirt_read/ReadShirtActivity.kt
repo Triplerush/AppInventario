@@ -43,6 +43,7 @@ class ReadShirtActivity : AppCompatActivity() {
         base = SQLManager(this)
 
         code = intent.extras?.getString("EXTRA_TEXT").orEmpty()
+
         txtNameShirt = findViewById(R.id.txtNameShirt)
         txtCodeShirt = findViewById(R.id.txtCodeShirt)
         txtAmount = findViewById(R.id.txtAmount)

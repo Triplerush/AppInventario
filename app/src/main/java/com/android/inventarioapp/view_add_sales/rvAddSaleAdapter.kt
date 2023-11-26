@@ -42,6 +42,8 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
 
     fun render(shirt: String, onDelete: (String) -> Unit) {
         txtShirt.text = shirt
+        inputPrice.setText("")
+        inputAmount.setText("")
         btnDelete.setOnClickListener { onDelete(shirt) }
     }
 
