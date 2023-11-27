@@ -31,7 +31,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
     }
 
     fun addMarca(context: Context, marca: Marca): Boolean {
-        var response = true
+        var response = false
         val contentValues = ContentValues()
         contentValues.put("MarCod", marca.MarCod)
         contentValues.put("MarNom", marca.MarNom)
@@ -39,9 +39,9 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         val manager = db.writableDatabase
         try {
             manager.insert("Marcas", null, contentValues)
+            response = true
         } catch (e: Exception) {
             print(e.message)
-            response = false
         } finally {
             db.close()
         }
@@ -84,13 +84,13 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         return response
     }
 
-    fun deleteMarca(context: Context, codMarca: Int): Boolean {
+    fun deleteData(context: Context, code: String, attribute: String, table: String): Boolean {
         var response = true
-        val args = arrayOf(codMarca.toString())
+        val args = arrayOf(code)
         val db = SQLManager(context)
         val manager = db.writableDatabase
         try {
-            manager.delete("Marcas","MarCod = ?", args)
+            manager.delete(table,"$attribute = ?", args)
         } catch (e: Exception) {
             print(e.message)
             response = false
@@ -376,8 +376,10 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
         val args = arrayOf(codShirt)
         val db = SQLManager(context)
         val manager = db.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("Estado", 0)
         try {
-            manager.delete("Camisetas","CamCod = ?", args)
+            manager.update("Camisetas", contentValues, "CamCod = ?", args)
         } catch (e: Exception) {
             print(e.message)
             response = false
@@ -400,7 +402,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "bd_inventario.db"
                     cursor.getString(0), cursor.getString(1), cursor.getString(2),
                     cursor.getInt(3), cursor.getString(4), cursor.getString(5),
                     cursor.getString(6), cursor.getInt(7), cursor.getInt(8),
-                    cursor.getString(9)
+                    cursor.getString(9), cursor.getInt(10)
                 )
                 listaCamisetas = listaCamisetas.plus(camiseta)
             } while (cursor.moveToNext())

@@ -19,6 +19,7 @@ class ReadSaleActivity : AppCompatActivity() {
     private lateinit var txtInputDate: TextView
     private lateinit var salCab: SalidaCabecera
     private lateinit var btnCancelar: Button
+    private lateinit var btnDelete: Button
 
 
     private lateinit var code: String
@@ -46,6 +47,7 @@ class ReadSaleActivity : AppCompatActivity() {
         txtInputPrice = findViewById(R.id.txtInputPrice)
         txtInputDate = findViewById(R.id.txtInputDate)
         btnCancelar = findViewById(R.id.btnCancelar)
+        btnDelete = findViewById(R.id.btnDelete)
 
         txtInputCode.text = salCab.SalCabNum.toString()
         txtInputClient.text = client
@@ -66,6 +68,18 @@ class ReadSaleActivity : AppCompatActivity() {
     private fun initListeners() {
         btnCancelar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        btnDelete.setOnClickListener {
+            deleteSale()
+        }
+    }
+
+    private fun deleteSale() {
+        base.deleteData(this, code,"SalCabNum","Salidas_cab")
+
+        for( a in lista){
+            base.deleteData(this,a.SalDetCod.toString(),"SalDetCod","Salidas_det")
         }
     }
 }

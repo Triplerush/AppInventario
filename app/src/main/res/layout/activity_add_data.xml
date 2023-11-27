@@ -52,16 +52,20 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btnAddClient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/add"
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnListClient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/view"
                 android:textSize="12sp" />
 
@@ -98,16 +102,20 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btnAddTeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/add"
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnListTeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/view"
                 android:textSize="12sp" />
 
@@ -145,16 +153,20 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btnAddPais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/add"
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnListPais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/view"
                 android:textSize="12sp" />
 
@@ -192,16 +204,20 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btnAddTalla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/add"
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnListTalla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/view"
                 android:textSize="12sp" />
 
@@ -238,17 +254,20 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btnAddMarca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/add"
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnViewBrand"
+                android:id="@+id/btnListMarca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/blue_app"
                 android:text="@string/view"
                 android:textSize="12sp" />
 

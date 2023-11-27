@@ -86,7 +86,9 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun navigateToExit() {
-        finish()
+        val intent = Intent(this, MainActivity2::class.java)
+        startActivity(intent)
+        //finish()
     }
 
     private val requestPermissionLauncher =

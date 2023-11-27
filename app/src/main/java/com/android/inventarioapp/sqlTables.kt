@@ -4,6 +4,7 @@ const val sqlQueryMarcas = """
     CREATE TABLE IF NOT EXISTS "Marcas" (
         "MarCod"    INTEGER NOT NULL,
         "MarNom"    TEXT NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,  
         PRIMARY KEY("MarCod")
     );
 """
@@ -12,6 +13,7 @@ const val sqlQueryTallas = """
     CREATE TABLE IF NOT EXISTS "Tallas" (
         "TalCod"    TEXT NOT NULL,
         "TalDes"    TEXT NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         PRIMARY KEY("TalCod")
     );
 """
@@ -21,6 +23,7 @@ const val sqlQueryEquipos = """
         "EquCod"    TEXT NOT NULL,
         "EquNom"    TEXT NOT NULL,
         "PaiCod"    INTEGER NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         PRIMARY KEY("EquCod")
     );
 """
@@ -29,6 +32,7 @@ const val sqlQueryPaises = """
     CREATE TABLE IF NOT EXISTS "Paises" (
         "PaiCod"    INTEGER NOT NULL,
         "PaiNom"    TEXT NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         PRIMARY KEY("PaiCod")
     );
 """
@@ -45,6 +49,7 @@ const val sqlQueryCamisetas = """
         "CamCan"    INTEGER NOT NULL,
         "MarCod"    INTEGER NOT NULL,
         "CamIma"    TEXT NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         FOREIGN KEY("TalCod") REFERENCES "Tallas"("TalCod"),
         FOREIGN KEY("EquCod") REFERENCES "Equipos"("EquCod"),
         FOREIGN KEY("MarCod") REFERENCES "Marcas"("MarCod"),
@@ -59,6 +64,7 @@ const val sqlQuerySalidasDet = """
         "CamCod"    TEXT NOT NULL,
         "CanCam"    INTEGER NOT NULL,
         "DetPre"    REAL NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         FOREIGN KEY("CanCam") REFERENCES "Camisetas"("CamCod"),
         PRIMARY KEY("SalDetCod")
     );
@@ -69,6 +75,7 @@ const val sqlQueryCliente = """
         "CliCod"    TEXT NOT NULL,
         "CliNom"    TEXT NOT NULL,
         "CliNumTel" TEXT NOT NULL,
+        "Estado"    INTEGER NOT NULL DEFAULT 1,
         PRIMARY KEY("CliCod")
     );
 """
@@ -81,7 +88,9 @@ const val sqlQuerySalidasCab = """
         "SalCabDay"  INTEGER NOT NULL,
         "CabPre"     REAL NOT NULL,
         "SalCabCli"  TEXT NOT NULL,
+        "Estado"     INTEGER NOT NULL DEFAULT 1,
         FOREIGN KEY("SalCabCli") REFERENCES "Cliente"("CliCod"),
         PRIMARY KEY("SalCabNum")
     );
 """
+

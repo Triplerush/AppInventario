@@ -30,7 +30,7 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
     val base = SQLManager(context)
 
     fun render(sDet: SalidaDetalle) {
-        val shirt = base.getOneCamiseta(context,sDet.CamCod)!!.CamNom
+        val shirt = base.getOneCamiseta(context,sDet.CamCod)?.CamNom
         txtShirt.text = shirt
         inputPrice.text = sDet.DetPre.toString()
         inputAmount.text = sDet.CanCam.toString()

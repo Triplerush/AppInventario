@@ -69,7 +69,7 @@ class AddSalesActivity : AppCompatActivity() {
         inputAmount = findViewById(R.id.inputAmount)
         obtenerFechaActual()
 
-        for (shirt in base.getCamisetas(this)) {
+        for (shirt in base.getCamisetas(this).asList().filter { camiseta -> camiseta.EstCam == 1 }) {
             ListaShirts = ListaShirts.plus("${shirt.CamCod} - ${shirt.CamNom}")
         }
         val adaptadorShirt = ArrayAdapter<String>(this, R.layout.spinner_items, ListaShirts)

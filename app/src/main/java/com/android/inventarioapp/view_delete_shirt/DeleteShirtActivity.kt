@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.inventarioapp.R
 import com.android.inventarioapp.SQLManager
 import com.android.inventarioapp.class_tables.Shirt
-import com.android.inventarioapp.view_add_shirt.AddShirtActivity
 import com.android.inventarioapp.view_menu_app.MenuActivity
 import com.google.android.material.textfield.TextInputEditText
 
@@ -50,7 +48,7 @@ class DeleteShirtActivity : AppCompatActivity() {
 
         rvSearch = findViewById(R.id.rvShirtsActions)
         btnDelete = findViewById(R.id.btnDelete)
-        lista = ArrayList(base.getCamisetas(this).asList())
+        lista = ArrayList(base.getCamisetas(this).asList().filter { camiseta -> camiseta.EstCam == 1 })
         adapterShirtAction = rvDeleteAdapter(
             lista,
             { flag, cod -> selectedDelete(flag, cod) }
@@ -61,7 +59,6 @@ class DeleteShirtActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@DeleteShirtActivity)
             adapter = adapterShirtAction
         }
-
     }
 
     private fun initListeners() {

@@ -42,8 +42,12 @@
     <string name="price">Precio</string>
     <string name="dinero">S/.</string>
     <string name="borrar">Borrar</string>
+    <string name="description">Descripción</string>
     <string name="total">Total</string>
     <string name="date">Fecha</string>
     <string name="country">País</string>
+    <string name="phone">Teléfono</string>
+    <string name="name">Nombre</string>
+
 
 </resources>

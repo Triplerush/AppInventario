@@ -56,10 +56,8 @@ class SearchShirtActivity : AppCompatActivity() {
 
         rvSearch = findViewById(R.id.rvShirtsActions)
         btnAdd = findViewById(R.id.btnInicio)
-        lista = ArrayList(base.getCamisetas(this).asList())
-        adapterShirtAction = rvSearchAdapter(
-            lista
-        )
+        lista = ArrayList(base.getCamisetas(this).asList().filter { camiseta -> camiseta.EstCam == 1 })
+        adapterShirtAction = rvSearchAdapter(lista)
         btnVolver = findViewById(R.id.btnVolver)
 
         rvSearch.apply {
