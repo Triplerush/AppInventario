@@ -1,11 +1,15 @@
 package com.android.inventarioapp.view_search_shirts
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inventarioapp.R
@@ -35,6 +39,23 @@ class SearchShirtActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_shirt)
         initComponents()
         initListeners()
+        reviewPermission()
+    }
+
+    private fun reviewPermission() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        else
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+
+        if (ContextCompat.checkSelfPermission(
+                this@SearchShirtActivity,
+                permission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val message = "Debes conceder el permiso para ver las imagenes de las camisetas"
+            Toast.makeText(this@SearchShirtActivity,message, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initComponents(){

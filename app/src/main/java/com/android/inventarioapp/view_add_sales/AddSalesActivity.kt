@@ -69,7 +69,8 @@ class AddSalesActivity : AppCompatActivity() {
         inputAmount = findViewById(R.id.inputAmount)
         obtenerFechaActual()
 
-        for (shirt in base.getCamisetas(this).asList().filter { camiseta -> camiseta.EstCam == 1 }) {
+        for (shirt in base.getCamisetas(this).asList()
+            .filter { camiseta -> camiseta.EstCam == 1 }) {
             ListaShirts = ListaShirts.plus("${shirt.CamCod} - ${shirt.CamNom}")
         }
         val adaptadorShirt = ArrayAdapter<String>(this, R.layout.spinner_items, ListaShirts)
@@ -98,7 +99,6 @@ class AddSalesActivity : AppCompatActivity() {
         }
 
         sprCodeshirt.onItemSelectedListener = object :
-
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -109,10 +109,10 @@ class AddSalesActivity : AppCompatActivity() {
                 val selectedItem = parent?.getItemAtPosition(position).toString()
                 if (selectedItem != "Camisetas" && !lista.contains(selectedItem)) {
                     lista.add(selectedItem)
-                    adapterShirtAction.changeResult(lista)
+                    adapterShirtAction.notifyItemInserted(lista.size - 1)
+                    sprCodeshirt.setSelection(0)
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
@@ -184,7 +184,7 @@ class AddSalesActivity : AppCompatActivity() {
             val shirt = base.getOneCamiseta(this, codShirt.toString())!!
             shirt.CamCan -= inputAmountValue!!.toInt()
 
-            base.updateShirt(this,shirt)
+            base.updateShirt(this, shirt)
             base.addSalidaDet(
                 this, SalidaDetalle(
                     ("$cabCod$i").toInt(),
@@ -217,9 +217,18 @@ class AddSalesActivity : AppCompatActivity() {
     }
 
     private fun filtrar(texto: String) {
-        lista.remove(texto)
-        adapterShirtAction.changeResult(lista)
+        val index = lista.indexOf(texto)
+
+        if (index != -1) {
+            lista.removeAt(index)
+            adapterShirtAction.notifyItemRemoved(index)
+
+            // Notificar al adaptador que los elementos han cambiado en el rango afectado
+            adapterShirtAction.notifyItemRangeChanged(index, lista.size - index)
+        }
     }
+
+
 
     private fun calculatePrice() {
         if (adapterShirtAction.itemCount == 0) {

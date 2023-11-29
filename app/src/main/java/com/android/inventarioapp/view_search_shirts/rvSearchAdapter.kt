@@ -1,6 +1,8 @@
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inventarioapp.R
@@ -37,11 +41,21 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
     val txtAmount = view.findViewById<TextView>(R.id.txtAmount)
     val imageShirt = view.findViewById<ImageView>(R.id.imageShirt)
     val container = view.findViewById<LinearLayout>(R.id.container)
+    val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        android.Manifest.permission.READ_MEDIA_IMAGES
+    else
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
 
     fun render(shirt: Shirt) {
         txtName.text = shirt.CamNom
         txtAmount.text = "Cantidad: ${shirt.CamCan}"
-        imageShirt.setImageURI(Uri.parse(shirt.CamIma))
+        if (ContextCompat.checkSelfPermission(
+                context,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            imageShirt.setImageURI(Uri.parse(shirt.CamIma))
+        }
         container.setOnClickListener { navigateToReadShirtActivity(shirt.CamCod) }
     }
 
@@ -50,4 +64,6 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
         intent.putExtra("EXTRA_TEXT",code)
         context.startActivity(intent)
     }
+
+
 }

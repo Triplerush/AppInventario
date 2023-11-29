@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InventarioApp</string>
+    <string name="app_name">Shirt Elegance</string>
     <string name="subtitle_menu">"Inicio"</string>
     <string name="add_shirt">Agregar Camiseta</string>
     <string name="edit_shirt">Editar Camiseta</string>
@@ -22,7 +22,7 @@
     <string name="insert">Ingresar</string>
     <string name="acept">Aceptar</string>
     <string name="cancel">Cancelar</string>
-    <string name="title_menu">"App Inventario"</string>
+    <string name="title_menu">"Shirt Elegance"</string>
     <string name="shirts">"Camisetas"</string>
     <string name="back">Volver</string>
     <string name="add">Añadir</string>
@@ -48,6 +48,7 @@
     <string name="country">País</string>
     <string name="phone">Teléfono</string>
     <string name="name">Nombre</string>
+    <string name="question">¿Seguro que quieres eliminar este elemento?</string>
 
 
 </resources>

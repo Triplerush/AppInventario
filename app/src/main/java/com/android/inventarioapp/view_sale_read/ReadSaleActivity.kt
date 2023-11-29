@@ -1,15 +1,20 @@
 package com.android.inventarioapp.view_sale_read
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inventarioapp.R
 import com.android.inventarioapp.SQLManager
 import com.android.inventarioapp.class_tables.SalidaCabecera
 import com.android.inventarioapp.class_tables.SalidaDetalle
+import com.android.inventarioapp.dialogs.AceptDialog
+import com.android.inventarioapp.view_menu_app.MenuActivity
 
 class ReadSaleActivity : AppCompatActivity() {
     private lateinit var rvShirts: RecyclerView
@@ -71,15 +76,25 @@ class ReadSaleActivity : AppCompatActivity() {
         }
 
         btnDelete.setOnClickListener {
-            deleteSale()
+            mostrarDialog(AceptDialog(this, { flag -> deleteSale(flag)}))
         }
     }
 
-    private fun deleteSale() {
-        base.deleteData(this, code,"SalCabNum","Salidas_cab")
+    private fun mostrarDialog(dialog: DialogFragment) {
+        dialog.show(supportFragmentManager, "dialog")
+    }
 
-        for( a in lista){
-            base.deleteData(this,a.SalDetCod.toString(),"SalDetCod","Salidas_det")
+    private fun deleteSale(flag : Boolean) {
+        if(flag){
+            base.deleteData(this, code,"SalCabNum","Salidas_cab")
+
+            for( a in lista){
+                base.deleteData(this,a.SalDetCod.toString(),"SalDetCod","Salidas_det")
+            }
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this@ReadSaleActivity,"CAMISETA ElIMINADA CORRECTAMENTE", Toast.LENGTH_LONG).show()
+            finishAffinity()
         }
     }
 }

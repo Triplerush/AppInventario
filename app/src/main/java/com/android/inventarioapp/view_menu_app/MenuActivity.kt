@@ -2,10 +2,11 @@ package com.android.inventarioapp.view_menu_app
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.android.inventarioapp.MainActivity2
@@ -32,6 +33,7 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         initComponents()
         initListeners()
+        requestPermission()
     }
 
     private fun initComponents() {
@@ -58,6 +60,7 @@ class MenuActivity : AppCompatActivity() {
     private fun navigateToAddShirtActivity() {
         val intent = Intent(this, AddShirtActivity::class.java)
         startActivity(intent)
+
     }
 
     private fun navigateToViewShirtActivity() {
@@ -86,9 +89,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun navigateToExit() {
-        val intent = Intent(this, MainActivity2::class.java)
-        startActivity(intent)
-        //finish()
+        finish()
     }
 
     private val requestPermissionLauncher =
@@ -97,28 +98,28 @@ class MenuActivity : AppCompatActivity() {
         ) { isGranted: Boolean ->
             if (isGranted) {
                 val result = isGranted
-            } else {
-
-            }
-            Log.i("permiso",isGranted.toString())
+            } 
         }
 
-    private fun requestPermissionHandler() {
+    private fun requestPermissionHandler(permission: String) {
         when {
-            ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                // Permiso ya concedido
-            }
+            ContextCompat.checkSelfPermission(this, permission )== PackageManager.PERMISSION_GRANTED -> {}
+
             shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                // El usuario ha denegado el permiso previamente, puedes mostrar un mensaje explicativo aquí
             }
             else -> {
                 requestPermissionLauncher.launch(
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    permission
                 )
             }
         }
+    }
+
+    private fun requestPermission() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        else
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        requestPermissionHandler(permission)
     }
 }

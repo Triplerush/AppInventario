@@ -6,7 +6,6 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <application
         android:allowBackup="true"
@@ -23,9 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".view_add_data.AddDataActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view_extra_data.AddExtraDataActivity"
             android:exported="false" />
         <activity
             android:name=".view_edit_shirt.EditShirtActivity"
@@ -49,10 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view_shirt.ViewShirtActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".view_sales.ViewSalesActivity"
             android:exported="false"

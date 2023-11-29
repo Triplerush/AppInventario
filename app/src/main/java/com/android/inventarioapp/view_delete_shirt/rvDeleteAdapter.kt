@@ -1,13 +1,16 @@
 package com.android.inventarioapp.view_delete_shirt
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inventarioapp.R
 import com.android.inventarioapp.class_tables.Shirt
@@ -38,11 +41,21 @@ class ShirtViewHolder(private val context: Context, view: View) : RecyclerView.V
     val txtAmount = view.findViewById<TextView>(R.id.txtAmount)
     val imageShirt = view.findViewById<ImageView>(R.id.imageShirt)
     val checkBox = view.findViewById<CheckBox>(R.id.checkBox)
+    val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        android.Manifest.permission.READ_MEDIA_IMAGES
+    else
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
 
     fun render(shirt: Shirt, onDelete: (Boolean, String) -> Unit) {
         txtName.text = shirt.CamNom
         txtAmount.text = "Cantidad: ${shirt.CamCan}"
-        imageShirt.setImageURI(Uri.parse(shirt.CamIma))
+        if (ContextCompat.checkSelfPermission(
+                context,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            imageShirt.setImageURI(Uri.parse(shirt.CamIma))
+        }
         checkBox.setOnClickListener {  onDelete(checkBox.isChecked, shirt.CamCod) }
     }
 
