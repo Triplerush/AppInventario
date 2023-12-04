@@ -19,10 +19,13 @@
         tools:targetApi="34">
         <activity
             android:name=".view_sale_read.ReadSaleActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".view_add_data.AddDataActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view_edit_shirt.EditShirtActivity"
             android:exported="false"
