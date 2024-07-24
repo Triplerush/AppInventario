@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.android.inventarioapp.MainActivity2
 import com.android.inventarioapp.R
@@ -19,13 +20,12 @@ import com.android.inventarioapp.view_add_data.AddDataActivity
 import com.android.inventarioapp.view_search_shirts.SearchShirtActivity
 
 class MenuActivity : AppCompatActivity() {
-    private lateinit var btnAddShirt: Button
-    private lateinit var btnViewShirt: Button
-    private lateinit var btnRemoveShirt: Button
-    private lateinit var btnViewSale: Button
-    private lateinit var btnAddSale: Button
-    private lateinit var btnAddExtraData: Button
-    private lateinit var btnExit: Button
+    private lateinit var btnAddShirt: CardView
+    private lateinit var btnViewShirt: CardView
+    private lateinit var btnRemoveShirt: CardView
+    private lateinit var btnViewSale: CardView
+    private lateinit var btnAddSale: CardView
+    private lateinit var btnAddExtraData: CardView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,6 @@ class MenuActivity : AppCompatActivity() {
         btnViewSale = findViewById(R.id.btnViewSales)
         btnAddSale = findViewById(R.id.btnAddSales)
         btnAddExtraData = findViewById(R.id.btnAddExtraData)
-        btnExit = findViewById(R.id.btnExit)
     }
 
     private fun initListeners() {
@@ -53,8 +52,6 @@ class MenuActivity : AppCompatActivity() {
         btnAddSale.setOnClickListener { navigateToAddSalesActivity() }
         btnViewSale.setOnClickListener { navigateToViewSalesActivity() }
         btnAddExtraData.setOnClickListener { navigateToAddExtraData() }
-        btnExit.setOnClickListener { navigateToExit() }
-
     }
 
     private fun navigateToAddShirtActivity() {
@@ -98,7 +95,7 @@ class MenuActivity : AppCompatActivity() {
         ) { isGranted: Boolean ->
             if (isGranted) {
                 val result = isGranted
-            } 
+            }
         }
 
     private fun requestPermissionHandler(permission: String) {

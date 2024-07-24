@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Shirt Elegance</string>
     <string name="subtitle_menu">"Inicio"</string>
-    <string name="add_shirt">Agregar Camiseta</string>
+    <string name="add_shirt">Agregar</string>
     <string name="edit_shirt">Editar Camiseta</string>
-    <string name="view_shirts">Ver Camisetas</string>
+    <string name="view_shirts">Listar</string>
     <string name="delete_shirt">Eliminar Camiseta</string>
     <string name="view_sales">Ver Ventas</string>
-    <string name="add_sale">Agregar Venta</string>
+    <string name="add_sale">Registrar</string>
     <string name="exit">Salir</string>
     <string name="code">Código</string>
     <string name="shirt_name">Nombre de la Camiseta</string>
@@ -49,6 +49,7 @@
     <string name="phone">Teléfono</string>
     <string name="name">Nombre</string>
     <string name="question">¿Seguro que quieres eliminar este elemento?</string>
+    <string name="sale">Ventas</string>
 
 
 </resources>
